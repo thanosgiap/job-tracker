@@ -1,10 +1,11 @@
 import type { Metadata } from "next"
-import { Geist } from "next/font/google"
+import { Inter } from "next/font/google"
 import { ClerkProvider } from "@clerk/nextjs"
+import QueryProvider from "../components/QueryProvider"
 import "./globals.css"
 
-const geist = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 })
 
@@ -21,8 +22,8 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${geist.variable} antialiased`}>
-          {children}
+        <body className={`${inter.variable} antialiased`}>
+          <QueryProvider>{children}</QueryProvider>
         </body>
       </html>
     </ClerkProvider>
