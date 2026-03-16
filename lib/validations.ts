@@ -20,4 +20,7 @@ export const ApplicationSchema = z.object({
   notes: z.string().optional(),
 })
 
+export const PartialApplicationSchema = ApplicationSchema.partial()
+
 export type ApplicationInput = z.infer<typeof ApplicationSchema>
+export type PartialApplicationInput = z.infer<typeof PartialApplicationSchema>

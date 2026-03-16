@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server"
 import { NextResponse } from "next/server"
 import { db } from "../../../../lib/db"
-import { ApplicationSchema } from "../../../../lib/validations"
+import { PartialApplicationSchema } from "../../../../lib/validations"
 
 export async function PATCH(
   req: Request,
@@ -24,7 +24,7 @@ export async function PATCH(
 
     const { id } = await params
     const body = await req.json()
-    const validated = ApplicationSchema.safeParse(body)
+    const validated = PartialApplicationSchema.safeParse(body)
 
     if (!validated.success) {
       return NextResponse.json(

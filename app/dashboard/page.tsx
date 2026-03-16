@@ -2,22 +2,46 @@
 
 import { useState } from "react"
 import { UserButton } from "@clerk/nextjs"
-import { Plus } from "lucide-react"
+import { Plus, LayoutGrid, Table } from "lucide-react"
 import { Button } from "../../components/ui/button"
 import ApplicationDialog from "../../components/applications/ApplicationDialog"
 import ApplicationsTable from "../../components/applications/ApplicationsTable"
+import KanbanBoard from "../../components/applications/KanbanBoard"
 import { useApplications } from "../../hooks/useApplications"
+
+type View = "table" | "kanban"
 
 export default function DashboardPage() {
   const [dialogOpen, setDialogOpen] = useState(false)
+  const [view, setView] = useState<View>("kanban")
   const { data: applications, isLoading, refetch } = useApplications()
 
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="border-b bg-white px-6 py-4">
-        <div className="mx-auto flex max-w-6xl items-center justify-between">
+        <div className="mx-auto flex max-w-7xl items-center justify-between">
           <h1 className="text-xl font-semibold">Job Tracker</h1>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <div className="flex items-center rounded-lg border bg-white p-1">
+              <Button
+                variant={view === "kanban" ? "secondary" : "ghost"}
+                size="sm"
+                onClick={() => setView("kanban")}
+                className="h-7 px-3"
+              >
+                <LayoutGrid className="mr-1.5 h-3.5 w-3.5" />
+                Board
+              </Button>
+              <Button
+                variant={view === "table" ? "secondary" : "ghost"}
+                size="sm"
+                onClick={() => setView("table")}
+                className="h-7 px-3"
+              >
+                <Table className="mr-1.5 h-3.5 w-3.5" />
+                Table
+              </Button>
+            </div>
             <Button onClick={() => setDialogOpen(true)}>
               <Plus className="mr-2 h-4 w-4" />
               Add Application
@@ -27,11 +51,16 @@ export default function DashboardPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-6 py-8">
+      <main className="mx-auto max-w-7xl px-6 py-8">
         {isLoading ? (
           <div className="flex justify-center py-16">
             <p className="text-gray-500">Loading applications...</p>
           </div>
+        ) : view === "kanban" ? (
+          <KanbanBoard
+            applications={applications ?? []}
+            onRefresh={refetch}
+          />
         ) : (
           <ApplicationsTable
             applications={applications ?? []}
