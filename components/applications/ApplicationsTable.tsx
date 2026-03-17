@@ -26,8 +26,8 @@ export default function ApplicationsTable({ applications, onRefresh }: Props) {
     if (applications.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center py-16 text-center">
-                <p className="text-lg font-medium text-gray-900">No applications yet</p>
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="text-lg font-medium">No applications yet</p>
+                <p className="mt-1 text-sm text-muted-foreground">
                     Add your first job application to get started
                 </p>
             </div>
@@ -36,9 +36,9 @@ export default function ApplicationsTable({ applications, onRefresh }: Props) {
 
     return (
         <>
-            <div className="overflow-x-auto rounded-lg border">
+            <div className="overflow-x-auto rounded-lg border bg-card">
                 <table className="w-full text-sm">
-                    <thead className="bg-gray-50 text-left text-xs font-medium uppercase tracking-wide text-gray-500">
+                    <thead className="bg-muted text-left text-xs font-medium uppercase tracking-wide text-muted-foreground">
                         <tr>
                             <th className="px-4 py-3">Company</th>
                             <th className="px-4 py-3">Role</th>
@@ -51,8 +51,8 @@ export default function ApplicationsTable({ applications, onRefresh }: Props) {
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                         {applications.map((app) => (
-                            <tr key={app.id} className="bg-white hover:bg-gray-50">
-                                <td className="px-4 py-3 font-medium">{app.company}</td>
+                            <tr key={app.id} className="bg-card hover:bg-muted transition-colors">
+                                <td className="px-4 py-3 text-muted-foreground">{app.company}</td>
                                 <td className="px-4 py-3">{app.role}</td>
                                 <td className="px-4 py-3 text-gray-500">
                                     {app.location ?? "—"}
@@ -63,7 +63,7 @@ export default function ApplicationsTable({ applications, onRefresh }: Props) {
                                 <td className="px-4 py-3">
                                     <StatusBadge status={app.status} />
                                 </td>
-                                <td className="px-4 py-3 text-gray-500">
+                                <td className="px-4 py-3 text-muted-foreground">
                                     {new Date(app.appliedAt).toLocaleDateString()}
                                 </td>
                                 <td className="px-4 py-3">

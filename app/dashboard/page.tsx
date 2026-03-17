@@ -13,6 +13,7 @@ import { useApplications } from "../../hooks/useApplications"
 import { exportToCsv } from "../../lib/exportCsv"
 import { useInactivityTimeout } from "../../hooks/useInactivityTimeout"
 import { useAuth } from "@clerk/nextjs"
+import ThemeToggle from "../../components/ThemeToggle"
 
 type View = "table" | "kanban"
 
@@ -36,12 +37,12 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="border-b bg-white px-6 py-4">
+    <div className="min-h-screen bg-background">
+      <header className="border-b bg-background px-6 py-4">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
           <h1 className="text-xl font-semibold">Job Tracker</h1>
           <div className="flex items-center gap-3">
-            <div className="flex items-center rounded-lg border bg-white p-1">
+            <div className="flex items-center rounded-lg border p-1">
               <Button
                 variant={view === "kanban" ? "secondary" : "ghost"}
                 size="sm"
@@ -61,6 +62,7 @@ export default function DashboardPage() {
                 Table
               </Button>
             </div>
+            <ThemeToggle />
             <Button
               variant="outline"
               onClick={() => exportToCsv(applications ?? [])}

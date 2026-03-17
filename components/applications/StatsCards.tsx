@@ -47,7 +47,7 @@ export default function StatsCards({ applications }: Props) {
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="rounded-lg border bg-white p-4"
+          className="rounded-lg border bg-card text-card-foreground p-4"
         >
           <p className="text-sm text-gray-500">{stat.label}</p>
           <p className="mt-1 text-3xl font-semibold">

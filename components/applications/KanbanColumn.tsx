@@ -36,9 +36,8 @@ export default function KanbanColumn({
 
       <div
         ref={setNodeRef}
-        className={`flex flex-col gap-2 min-h-[200px] rounded-xl p-2 transition-colors ${
-          isOver ? "bg-blue-50" : "bg-gray-100"
-        }`}
+        className={`flex flex-col gap-2 min-h-[200px] rounded-xl p-2 transition-colors ${isOver ? "bg-blue-50 dark:bg-blue-950" : "bg-muted"
+          }`}
       >
         <SortableContext
           items={applications.map((a) => a.id)}

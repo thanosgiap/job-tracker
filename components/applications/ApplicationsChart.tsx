@@ -51,7 +51,7 @@ export default function ApplicationsChart({ applications }: Props) {
   const data = getChartData(applications)
 
   return (
-    <div className="rounded-lg border bg-white p-6 mb-8">
+    <div className="rounded-lg border bg-card p-6 mb-8">
       <h2 className="text-sm font-medium text-gray-700 mb-4">
         Applications over time
       </h2>

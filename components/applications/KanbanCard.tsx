@@ -34,7 +34,7 @@ export default function KanbanCard({ application, onEdit, onDelete }: Props) {
             style={style}
             {...attributes}
             {...listeners}
-            className="rounded-lg border bg-white p-3 shadow-sm cursor-grab active:cursor-grabbing"
+            className="rounded-lg border bg-card text-card-foreground p-3 shadow-sm cursor-grab active:cursor-grabbing"
         >
             <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
