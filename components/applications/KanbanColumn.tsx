@@ -25,7 +25,7 @@ export default function KanbanColumn({
   const { setNodeRef, isOver } = useDroppable({ id: status })
 
   return (
-    <div className="flex flex-col gap-3 min-w-[260px] w-[260px]">
+    <div className="flex flex-col gap-3 min-w-[260px] w-[260px] snap-start">
       <div className="flex items-center gap-2">
         <span className={`h-2.5 w-2.5 rounded-full ${color}`} />
         <h3 className="font-medium text-sm">{label}</h3>

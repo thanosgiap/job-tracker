@@ -2,19 +2,38 @@
 
 import { useState } from "react"
 import { UserButton } from "@clerk/nextjs"
-import { Plus, LayoutGrid, Table } from "lucide-react"
+import { Plus, LayoutGrid, Table, Download } from "lucide-react"
 import { Button } from "../../components/ui/button"
 import ApplicationDialog from "../../components/applications/ApplicationDialog"
 import ApplicationsTable from "../../components/applications/ApplicationsTable"
 import KanbanBoard from "../../components/applications/KanbanBoard"
+import StatsCards from "../../components/applications/StatsCards"
+import ApplicationsChart from "../../components/applications/ApplicationsChart"
 import { useApplications } from "../../hooks/useApplications"
+import { exportToCsv } from "../../lib/exportCsv"
+import { useInactivityTimeout } from "../../hooks/useInactivityTimeout"
+import { useAuth } from "@clerk/nextjs"
 
 type View = "table" | "kanban"
 
 export default function DashboardPage() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [view, setView] = useState<View>("kanban")
+  const { isLoaded, isSignedIn } = useAuth()
   const { data: applications, isLoading, refetch } = useApplications()
+  useInactivityTimeout()
+
+  if (!isLoaded) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-gray-500">Loading...</p>
+      </div>
+    )
+  }
+
+  if (!isSignedIn) {
+    return null
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -42,6 +61,13 @@ export default function DashboardPage() {
                 Table
               </Button>
             </div>
+            <Button
+              variant="outline"
+              onClick={() => exportToCsv(applications ?? [])}
+            >
+              <Download className="mr-2 h-4 w-4" />
+              Export
+            </Button>
             <Button onClick={() => setDialogOpen(true)}>
               <Plus className="mr-2 h-4 w-4" />
               Add Application
@@ -56,16 +82,22 @@ export default function DashboardPage() {
           <div className="flex justify-center py-16">
             <p className="text-gray-500">Loading applications...</p>
           </div>
-        ) : view === "kanban" ? (
-          <KanbanBoard
-            applications={applications ?? []}
-            onRefresh={refetch}
-          />
         ) : (
-          <ApplicationsTable
-            applications={applications ?? []}
-            onRefresh={refetch}
-          />
+          <>
+            <StatsCards applications={applications ?? []} />
+            <ApplicationsChart applications={applications ?? []} />
+            {view === "kanban" ? (
+              <KanbanBoard
+                applications={applications ?? []}
+                onRefresh={refetch}
+              />
+            ) : (
+              <ApplicationsTable
+                applications={applications ?? []}
+                onRefresh={refetch}
+              />
+            )}
+          </>
         )}
       </main>
 
