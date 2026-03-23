@@ -1,7 +1,7 @@
 # Job Tracker
 
 A full-stack job application tracker built with Next.js, TypeScript, and AI-powered auto-fill.
-You can view it here [job-tracker](job-tracker-mu-two.vercel.app)
+You can view it here [job-tracker](https://job-tracker-mu-two.vercel.app)
 
 ## Features
 
